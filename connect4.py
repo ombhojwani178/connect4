@@ -3,6 +3,7 @@ import pygame
 import math
 import sys
 import random
+import time
 
 BLUE = (0,0,255)
 BLACK = (0,0,0)
@@ -182,7 +183,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
             # Alpha-Beta Pruning
             beta = min(beta, value)
             if alpha >= beta:
-                break 
+               break 
         return column, value
 
 def draw_board(board):
@@ -249,13 +250,22 @@ while not game_over:
 
     #2. AI TURN
     # Triggered automatically when turn == 1
-    if turn == 1 and not game_over:
-        
-        # Call the Minimax funcn
+     # Call the Minimax funcn
         # if depth=5: Looks 5 moves ahead. 
         # -math.inf & math.inf: Starting values for Alpha and Beta.
         # True: It is the AI's turn to maximize the score.
+   #2. AI TURN
+    if turn == 1 and not game_over:
+        
+        # START THE STOPWATCH
+        start_time = time.time()
+
+        # Call the Minimax funcn
         col, minimax_score = minimax(board, 5, -math.inf, math.inf, True)
+
+        # STOP THE STOPWATCH AND PRINT
+        end_time = time.time()
+        print(f"Move calculation time: {round(end_time - start_time, 4)} seconds")
 
         if valid_location(board, col):
             row = get_next_empty(board, col)
